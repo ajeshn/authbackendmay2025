@@ -3,8 +3,9 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const api = require("./routes/api");
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const app = express();
+require("dotenv").config();
 app.use(bodyParser.json());
 app.use(cors());
 app.use("/api", api);
@@ -14,9 +15,7 @@ app.get("/", (req, res) => {
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://ajesh:kandavath@cluster0.zsgbf.mongodb.net/maymern24?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("connected to db");
 
